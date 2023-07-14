@@ -69,39 +69,60 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-lg-4 col-md-12 wow fadeInUp" data-wow-delay="0.5s">
+                    <form role="form" action="/members/new" method="post"
+                    	th:object="${memberFormDto}">
+                        <div class="row g-3">
+                            <div class="col-12">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control" id="name" placeholder="Your Name"
+                                    	th:field="*{name}">
+                                    <label th:for="name">이름</label>
+                             		<p th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
+									class="fieldError">Incorrect Data</p>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-floating">
+                                    <input type="email" class="form-control" id="email" placeholder="Your Email"
+                                     th:field="*{email}">
+                                    <label th:for="email">이메일주소</label>
+                                    <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
+									class="fieldError">Incorrect Data</p>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-floating">
+                                    <input type="password" class="form-control" id="password" placeholder="password"
+                                     th:field="*{password}">
+                                    <label th:for="password">비밀번호</label>
+                                    <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}"
+									class="fieldError">Incorrect Data</p>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control" id="address" placeholder="Your address"
+                                     th:field="*{address}">
+                                    <label th:for="address">주소</label>
+                                    <p th:if="${#fields.hasErrors('address')}" th:errors="*{address}"
+									class="fieldError">Incorrect Data</p>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <button class="btn btn-primary w-100 py-3" type="submit">회원가입</button>
+                            </div>
+                        </div>
+                       <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                    </form>
+                </div>
                 <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
                     <iframe class="position-relative rounded w-100 h-100"
                         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3001156.4288297426!2d-78.01371936852176!3d42.72876761954724!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4ccc4bf0f123a5a9%3A0xddcfc6c1de189567!2sNew%20York%2C%20USA!5e0!3m2!1sen!2sbd!4v1603794290143!5m2!1sen!2sbd"
                         frameborder="0" style="min-height: 300px; border:0;" allowfullscreen="" aria-hidden="false"
                         tabindex="0"></iframe>
                 </div>
-                <div class="col-lg-4 col-md-12 wow fadeInUp" data-wow-delay="0.5s">
-                    <form>
-                        <div class="row g-3">
-                            <div class="col-12">
-                                <div class="form-floating">
-                                    <input type="text" class="form-control" id="name" placeholder="Your Name">
-                                    <label for="name">Your Name</label>
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <div class="form-floating">
-                                    <input type="email" class="form-control" id="email" placeholder="Your Email">
-                                    <label for="email">Your Email</label>
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <div class="form-floating">
-                                    <input type="text" class="form-control" id="subject" placeholder="Subject">
-                                    <label for="subject">Subject</label>
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <button class="btn btn-primary w-100 py-3" type="submit">Send Message</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+                
             </div>
         </div>
     </div>
@@ -111,7 +132,38 @@
 	
 <!-- 각 페이지의 스크립트가 작성될 위치 -->
 <th:block layout:fragment="script">
-	<script type="text/javascript">
+	<script type="text/javascript"></script>
+	<script type="text/javascript" th:src="@{/js/cookie.js}">
+	
+	
+	//쿠키를 이용한 아이디 기억
+	$(document).ready(function() {
+		var userInputId = getCookie("userInputId");
+		var setCookieYN = getCookie("setCookieYN");
+
+		if (setCookieYN == 'Y') {
+			$("#id_save").prop("checked", true);
+			$("#email").val(userInputId);
+		} else {
+			$("#id_save").prop("checked", false);
+		}
+
+		//로그인 버튼 클릭
+		$('#loginbtn').click(function() {
+			if ($("#id_save").is(":checked")) {
+				var userInputId = $("#email").val();
+				setCookie("userInputId", userInputId, 60);
+				setCookie("setCookieYN", "Y", 60);
+			} else {
+				deleteCookie("userInputId");
+				deleteCookie("setCookieYN");
+			}
+		});
+	});
+		
+		
+
+		
 	</script>
 </th:block>
 	

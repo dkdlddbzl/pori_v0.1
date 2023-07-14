@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -17,13 +18,16 @@ public class SecurityConfig {
 	
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+		//http.sessionManagement(s -> s.
+				//sessionCreationPolicy(SessionCreationPolicy.ALWAYS));
+
 		//람다로 변경됨
 		//login에 crsf 추가
 		//memberFormloginForm.html 오타 MemberFormDto -> memberFormDto로 변경
 		http.authorizeHttpRequests(authorize -> authorize  //페이지 접근에 관한 설정
 				//모든 사용자가 로그인(인증) 없이 점근할 수 있도록 설정
 				.requestMatchers("/css/**","/js/**","/img/**","/images/**","/fonts/**","/lib/**").permitAll()
-				.requestMatchers("/","/members/**","/item/**").permitAll()
+				.requestMatchers("/","/members/**","/petmate/**").permitAll()
 				.requestMatchers("/favicon.ico", "/error").permitAll()
 				//'admin'으로 시작하는 경로는 관리자만 접근가능하도록 설정
 				.requestMatchers("/admin/**").hasRole("ADMIN")
@@ -48,9 +52,6 @@ public class SecurityConfig {
 				.authenticationEntryPoint(new CustomAuthenticationEntryPoint())
 				)
 		.rememberMe(Customizer.withDefaults());
-		
-		
-		
 		
 		return http.build();
 	}

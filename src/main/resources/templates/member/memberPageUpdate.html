@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout1}">
+
+<!-- 각 페이지의 CSS가 작성될 위치 -->
+<th:block layout:fragment="css">
+	<style>
+</style>
+</th:block>
+
+<div layout:fragment="content">
+	<div class="container-xxl py-5">
+		<div class="container">
+			<div class="text-center wow">
+				<h1 class="section-title bg-white text-center text-primary px-3 mb-5">My Page</h1>
+			</div>
+			<div class="row lg-8 justify-content-center">
+				
+				<form role="form" action="/members/mypageupdate" method="post" enctype="multipart/form-data" 
+							th:object="${memberPageDto}" name="memberForm" class="row lg-8 justify-content-center">	
+							
+				<div class="col-lg-6  wow">
+					<div class="row g-3 justify-content-center">
+
+						<div class="col-10">
+							<label for="floatingPlaintextInput">이름</label>
+							<div class="form-floating">
+								<input type="text" class="form-control" id="name" name="name"
+									th:field="*{name}" >
+							</div>
+						</div>
+
+						<div class="col-10">
+							<label for="floatingPlaintextInput">주소</label>
+							<div class="form-floating">
+								<input type="text" class="form-control" id="address" name="address"
+									th:field="*{address}">
+							</div>
+						</div>
+
+						<div class="col-10">
+							<label for="floatingPlaintextInput">프로필 사진</label>
+							<div class="form-floating">
+								<input class="form-control" type="file" id="itemImgFile" name="itemImgFile">
+							</div>
+						</div>
+						<div class="col-10">
+							<button class="btn btn-primary w-100 py-3" type="submit"
+								id="loginbtn">수정하기</button>
+						</div>
+					</div>
+				</div>
+				<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"> 
+			</form> 
+			</div>
+		</div>
+	</div>
+
+</div>
+<!-- 각 페이지의 스크립트가 작성될 위치 -->
+<th:block layout:fragment="script">
+	<script type="text/javascript" th:src="@{/js/cookie.js}"></script>
+
+</th:block>
+
+</html>

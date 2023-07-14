@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout1}">
+
+<!-- 각 페이지의 CSS가 작성될 위치 -->
+<th:block layout:fragment="css">
+	<style>
+</style>
+</th:block>
+
+<div layout:fragment="content">
+
+
+	<div class="container-xxl py-5">
+		<div class="container ">
+			<div class="text-center wow">
+				<h1 class="section-title bg-white text-center text-primary px-3">펫메이트
+					목록</h1>
+			</div>
+
+
+
+			<!-- Team Start -->
+			<div class="container-xxl py-5">
+				<div class="container">
+					<div class="row g-4">
+						<th:block th:each="petmate, status: ${petmates.getContent()}">
+							<div class="col-lg-3 col-md-6 wow">
+								<div class="team-item bg-light">
+									<div class="overflow-hidden">
+										<img class="img-fluid" th:src="${petmate.imgUrl}"
+											th:alt="${petmate.petmateNm}" style="height: 350px;">
+									</div>
+									<div class="position-relative d-flex justify-content-center"
+										style="margin-top: -23px;">
+										<div class="bg-light d-flex justify-content-center pt-2 px-1">
+											<a class="btn btn-sm-square btn-primary mx-1" href=""><i
+												class="fab fa-facebook-f"></i></a> <a
+												class="btn btn-sm-square btn-primary mx-1" href=""><i
+												class="fab fa-twitter"></i></a> <a
+												class="btn btn-sm-square btn-primary mx-1" href=""><i
+												class="fab fa-instagram"></i></a>
+										</div>
+									</div>
+									<div class="text-center p-4">
+										<h5 class="mb-0">[[${petmate.petmateNm}]]</h5>
+										<small>[[${petmate.petmateDetail}]]</small>
+										<h5>
+											<a href="#"><i class="fa fa-star"></i></a> <a href="#"><i
+												class="fa fa-star"></i></a> <a href="#"><i
+												class="fa fa-star"></i></a> <a href="#"><i
+												class="fa fa-star"></i></a> <a href="#"><i
+												class="fa fa-star"></i></a>
+										</h5>
+									</div>
+
+								</div>
+							</div>
+					</div>
+				</div>
+			</div>
+			</th:block>
+
+			<div class="row justify-content-center">
+				<nav
+					th:with="start=${(petmates.number/maxPage)*maxPage + 1}
+			                 ,end=(${(petmates.totalPages == 0) ? 1 : (start + (maxPage - 1) < petmates.totalPages ? start + (maxPage - 1) : petmates.totalPages)})"
+					aria-label="Page navigation example">
+					<ul class="pagination d-flex justify-content-center">
+						<li class="page-item" th:classappend="${petmates.first}?'disabled'"><a
+							class="page-link"
+							th:href="@{'/petmate/list' + '?searchQuery=' + ${petmateSearchDto.searchQuery} + '&page=' + ${petmates.number-1}}">이전</a>
+						</li>
+
+						<li class="page-item"
+							th:each="page: ${#numbers.sequence(start, end)}"
+							th:classappend="${petmates.number eq page-1}?'active':''"><a
+							class="page-link" th:inline="text"
+							th:href="@{'/petmate/list' +'?searchQuery=' + ${petmateSearchDto.searchQuery} + '&page=' + ${page-1}}">[[${page}]]</a></li>
+
+						<li class="page-item" th:classappend="${petmates.last}?'disabled'">
+							<a class="page-link"
+							th:href="@{'/petmate/list' +'?searchQuery=' + ${petmateSearchDto.searchQuery} + '&page=' + ${petmates.number+1}}">다음</a>
+						</li>
+					</ul>
+				</nav>
+			</div>
+			<!-- Team End -->
+
+
+
+
+		</div>
+	</div>
+
+</div>
+
+<!-- 각 페이지의 스크립트가 작성될 위치 -->
+<th:block layout:fragment="script">
+	<script type="text/javascript" th:src="@{/js/cookie.js}"></script>
+
+</th:block>
+
+</html>

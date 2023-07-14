@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout1}">
+
+<!-- 각 페이지의 CSS가 작성될 위치 -->
+<th:block layout:fragment="css">
+	<style>
+</style>
+</th:block>
+
+<div layout:fragment="content">
+
+	<th:block th:each="member, status: ${members}">
+	<div class="container-xxl py-5">
+		<div class="container ">
+			<div class="text-center wow">
+				<h1 class="section-title bg-white text-center text-primary px-3 mb-5">My Page</h1>
+			</div>
+			<div class="row lg-8">
+				<div class="col-lg-6  wow">
+					<div class="row g-3 justify-content-center">
+						<div class="col-10">
+							<div class="form-floating h-100">
+								<img class="img-fluid w-100 h-100" src="/images/about_1.jpg"
+									alt="">
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<div class="col-lg-6  wow">
+					<div class="row g-3 justify-content-center">
+						<div class="col-10">
+							<label for="floatingPlaintextInput">이메일</label>
+							<div class="form-floating">
+								<h2 class="item-title">[[${member.email}]]</h2>
+							</div>
+						</div>
+
+						<div class="col-10">
+							<label for="floatingPlaintextInput">이름</label>
+							<div class="form-floating">
+								<h2 class="item-title">[[${member.name}]]</h2>
+							</div>
+						</div>
+
+						<div class="col-10">
+							<label for="floatingPlaintextInput">주소</label>
+							<div class="form-floating">
+								<h2 class="item-title">[[${member.address}]]</h2>
+							</div>
+						</div>
+
+						<div class="col-10">
+							<label for="floatingPlaintextInput">활동 점수</label>
+							<div class="form-floating">
+								<h2 class="item-title">[[${member.rating_score}]]</h2>
+							</div>
+						</div>
+						<div class="col-10">
+							<label for="floatingPlaintextInput">산책 횟수</label>
+							<div class="form-floating">
+								<h2 class="item-title">[[${member.run_count}]]</h2>
+							</div>
+						</div>
+						<div class="col-10">
+							<button class="btn btn-primary w-100 py-3" type="submit"
+								id="loginbtn" onclick="location.href='/members/mypageupdate';">수정하기</button>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+</div>
+</th:block>
+<!-- 각 페이지의 스크립트가 작성될 위치 -->
+<th:block layout:fragment="script">
+	<script type="text/javascript" th:src="@{/js/cookie.js}"></script>
+
+</th:block>
+
+</html>
