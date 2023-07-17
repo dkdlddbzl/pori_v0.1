@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -17,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.pori.dto.MainPetmateDto;
 import com.pori.dto.PetmateFormDto;
 import com.pori.dto.PetmateSearchDto;
+import com.pori.entity.Petmate;
 import com.pori.service.PetmateService;
 
 import jakarta.validation.Valid;
@@ -31,7 +33,7 @@ public class PetmateController {
 	//펫메 전체 리스트
 	@GetMapping(value= "/petmate/list")
 	public String petmateList(Model model, PetmateSearchDto petmateSearchDto,
-			Optional<Integer> page) {
+		 Optional<Integer> page) {
 		Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0 , 4);
 		Page<MainPetmateDto> petmates = petmateService.getMainPetmatePage(petmateSearchDto, pageable);
 		
@@ -42,7 +44,13 @@ public class PetmateController {
 		return "petmate/petmateList";
 	}
 	
-	
+	//펫메 상세 페이지
+	@GetMapping(value = "/petmate/{petmateId}")
+	public String petmateDtl(Model model, @PathVariable("petmateId") Long petmateId) {
+		PetmateFormDto petmateFormDto = petmateService.getPetmateDtl(petmateId);
+		model.addAttribute("petmate", petmateFormDto);
+		return "petmate/petmateDtl";
+	}
 	
 	
 	
@@ -79,4 +87,26 @@ public class PetmateController {
 		
 		return "redirect:/";
 	}
+	
+	//펫메이트 관리 페이지
+	@GetMapping(value = {"/petmate/petmatelists", "/petmate/petmatelists/{page}" }) 
+	public String petmateManage(PetmateSearchDto petmateSearchDto, @PathVariable("page") Optional<Integer> page, Model model) {
+		
+		Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 4);
+		
+		
+		Page<Petmate> petmates = petmateService.getAdminPage(petmateSearchDto, pageable);
+		model.addAttribute("petmates", petmates);
+		model.addAttribute("petmateSearchDto", petmateSearchDto);
+		model.addAttribute("maxPage", 5);
+		
+		return "petmate/petmateListPage";
+	}
+	
+	
+	
+	
+	
+	
+	
 }

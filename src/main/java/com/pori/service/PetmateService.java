@@ -106,6 +106,15 @@ public class PetmateService {
 	
 	
 	@Transactional(readOnly = true)
+	public Page<Petmate> getAdminPage(PetmateSearchDto petmateSearchDto, Pageable pageable) {
+		Page<Petmate> petmatePage = petmateRepository.getAdminPetmatePage(petmateSearchDto, pageable);
+		return petmatePage;
+	}
+	
+	
+	
+	
+	@Transactional(readOnly = true)
 	public Page<MainPetmateDto> getMainPetmatePage(PetmateSearchDto petmateSearchDto, Pageable pageable) {
 		Page<MainPetmateDto> mainPetmatePage = petmateRepository.getMainPetmatePage(petmateSearchDto, pageable);
 		return mainPetmatePage;

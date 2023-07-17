@@ -20,19 +20,17 @@
 			</div>
 
 
-
+		<form th:action="@{'/petmate/petmatelists/' + ${petmates.number}}" method="get"
+				th:object="${petmates}">
 			<!-- Team Start -->
 			<div class="container-xxl py-5">
 				<div class="container">
-					<div class="row g-4">
-						<th:block th:each="petmate, status: ${petmates.getContent()}">
+					<div class="row g-4" th:each="petmate, status: ${petmates.getContent()}">
 							<div class="col-lg-3 col-md-6 wow">
 								<div class="team-item bg-light">
 									<div class="overflow-hidden">
-										<a th:href="'/petmate/' + ${petmate.id}"><img
-											class="img-fluid" th:src="${petmate.imgUrl}"
-											th:alt="${petmate.petmateNm}" style="height: 350px;"></a>
-
+										<!-- <img class="img-fluid" th:src="${petmate.imgUrl}"
+											th:alt="${petmate.petmateNm}" style="height: 350px;"> -->
 									</div>
 									<div class="position-relative d-flex justify-content-center"
 										style="margin-top: -23px;">
@@ -46,7 +44,7 @@
 										</div>
 									</div>
 									<div class="text-center p-4">
-										<a th:href="'/petmate/' + ${petmate.id}"><h5 class="mb-0">[[${petmate.petmateNm}]]</h5></a>
+										<h5 class="mb-0">[[${petmate.petmateNm}]]</h5>
 										<small>[[${petmate.petmateDetail}]]</small>
 										<h5>
 											<a href="#"><i class="fa fa-star"></i></a> <a href="#"><i
@@ -56,13 +54,13 @@
 												class="fa fa-star"></i></a>
 										</h5>
 									</div>
-
+									
 								</div>
 							</div>
 					</div>
 				</div>
 			</div>
-
+			
 
 			<div class="row justify-content-center">
 				<nav
@@ -70,8 +68,7 @@
 			                 ,end=(${(petmates.totalPages == 0) ? 1 : (start + (maxPage - 1) < petmates.totalPages ? start + (maxPage - 1) : petmates.totalPages)})"
 					aria-label="Page navigation example">
 					<ul class="pagination d-flex justify-content-center">
-						<li class="page-item"
-							th:classappend="${petmates.first}?'disabled'"><a
+						<li class="page-item" th:classappend="${petmates.first}?'disabled'"><a
 							class="page-link"
 							th:href="@{'/petmate/list' + '?searchQuery=' + ${petmateSearchDto.searchQuery} + '&page=' + ${petmates.number-1}}">이전</a>
 						</li>
@@ -89,34 +86,31 @@
 					</ul>
 				</nav>
 			</div>
-
 			<!-- Team End -->
-			</th:block>
+							<select  class="form-control">
+									<option value="itemNm">상품명</option>
+									<option value="createdBy">등록자</option>
+							</select>
+							<div class="col-lg-3">
+								<div style="display: flex;">
+									<input type="text" class="form-control" placeholder="검색어 입력"
+										>
+									<button id="searchBtn" type="submit"
+										class="btn btn-primary mb-3">검색</button>
+								</div>
+							</div>
+		
+		</form>
+		
 		</div>
 	</div>
+
 </div>
 
 <!-- 각 페이지의 스크립트가 작성될 위치 -->
 <th:block layout:fragment="script">
 	<script type="text/javascript" th:src="@{/js/cookie.js}"></script>
-	<script th:inline="javascript">
-		$(document).ready(function() {
-			$("#searchBtn").on("click", function(e) {
-				e.preventDefault();//submit이 되는걸 막음
-				page(0);
-			});
-		});
-		//검색버튼(페이징)을 눌렀을때 검색어와 selectbox를 get방식으로 주소 이동 시켜준다.
-		function page(page) {
-			var searchDateType = $("#searchDateType").val();
-			var searchSellStatus = $("#searchItemSellStatus").val();
-			var searchBy = $("#searchBy").val();
-			var searchQuery = $("#searchQuery").val();
 
-			//주소이동
-			location.href = "/petmate/list/" + page + "&searchBy=" + searchBy
-					+ "&searchQuery=" + searchQuery;
-		}
-	</script>
 </th:block>
+
 </html>
