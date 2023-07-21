@@ -40,9 +40,11 @@
 											<a class="btn btn-sm-square btn-primary mx-1" href=""><i
 												class="fab fa-facebook-f"></i></a> <a
 												class="btn btn-sm-square btn-primary mx-1" href=""><i
-												class="fab fa-twitter"></i></a> <a
-												class="btn btn-sm-square btn-primary mx-1" href=""><i
+												class="fab fa-twitter"></i></a> 
+												<a class="btn btn-sm-square btn-primary mx-1" href=""><i
 												class="fab fa-instagram"></i></a>
+												<a class="btn btn-sm-square btn-primary mx-1" th:href="'/admin/books/open/' + ${petmate.id}" sec:authorize="isAuthenticated()">
+												<i	class="fab fa-instagram"></i></a>
 										</div>
 									</div>
 									<div class="text-center p-4">

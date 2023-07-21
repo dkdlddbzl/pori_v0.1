@@ -8,15 +8,20 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+import org.thymeleaf.util.StringUtils;
 
+import com.pori.constrant.ReviewStatus;
 import com.pori.dto.MainPetmateDto;
 import com.pori.dto.PetmateFormDto;
 import com.pori.dto.PetmateImgDto;
 import com.pori.dto.PetmateSearchDto;
+import com.pori.dto.ReviewFormDto;
 import com.pori.entity.Petmate;
 import com.pori.entity.PetmateImg;
+import com.pori.entity.Review;
 import com.pori.repository.PetmateImgRepository;
 import com.pori.repository.PetmateRepository;
+import com.pori.repository.ReviewRepository;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +33,7 @@ public class PetmateService {
 	private final PetmateRepository petmateRepository;
 	private final PetmateImgService petmateImgService;
 	private final PetmateImgRepository petmateImgRepository;
+	private final ReviewRepository reviewRepository;
 	
 	//petmate 테이블에 상품등록(insert)
 	public Long savePetmate(PetmateFormDto petmateFormDto, List<MultipartFile> petmateImgFileList) throws Exception {
@@ -62,10 +68,12 @@ public class PetmateService {
 	public PetmateFormDto getPetmateDtl(Long petmateId) {
 		//1. petmate_img 테이블의 이미지를 가져온다
 		List<PetmateImg> petmateImgList = petmateImgRepository.findByPetmateIdOrderByIdAsc(petmateId);
+		List<Review> reviewList = reviewRepository.findByPetmateIdOrderByIdAsc(petmateId);
 		
 		
 		//PetmateImg 엔티티 객체 -> PetmateImgDto로 변환
 		List<PetmateImgDto> petmateImgDtoList = new ArrayList<>();
+		List<ReviewFormDto> reviewFormDtoList = new ArrayList<>();
 		
 		for(PetmateImg petmateImg : petmateImgList) {
 			PetmateImgDto petmateImgDto = PetmateImgDto.of(petmateImg);
@@ -73,16 +81,21 @@ public class PetmateService {
 		}
 		
 		
+		for(Review review : reviewList) {
+			ReviewFormDto reviewFormDto = ReviewFormDto.of(review);
+			reviewFormDtoList.add(reviewFormDto);
+		}
 		
 		//2. petmate 테이블에 있는 데이터를 가져온다
 		Petmate petmate = petmateRepository.findById(petmateId).orElseThrow(EntityNotFoundException::new);
-		
-		
 		//Petmate엔티티 객체 -> Dto로 변환
 		PetmateFormDto petmateFormDto = PetmateFormDto.of(petmate);
 		
+		
 		//3. PetmateFormDto에 이미지 정보(petmateImgDtoList)를 넣어준다
 		petmateFormDto.setPetmateImgDtoList(petmateImgDtoList);
+		petmateFormDto.setReviewFormDtoList(reviewFormDtoList);
+		
 		
 		return petmateFormDto;
 	}
@@ -122,9 +135,12 @@ public class PetmateService {
 	
 	
 	
-	
-	
-	
+	public void updateStatus(Long petmateId) {
+		Petmate petmate = petmateRepository.findById(petmateId).orElseThrow(EntityNotFoundException::new);
+		
+		petmate.updateStatus();
+		
+	}
 	
 	
 	

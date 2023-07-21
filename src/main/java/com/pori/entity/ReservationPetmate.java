@@ -6,6 +6,8 @@ import com.pori.constrant.ReserveStatus;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -37,7 +39,7 @@ public class ReservationPetmate {
 	@JoinColumn(name="reserve_id")
 	private Reservation reservation;
 	
-	
+	@Enumerated(EnumType.STRING)
 	private ReserveStatus status;
 	
 	private int reservePrice;
@@ -48,11 +50,14 @@ public class ReservationPetmate {
 	
 	private int count;
 	
+	
+	//주문할 상품하고 주문 수량을 통해서 orderItem 객체를만늗ㅁ
 	public static ReservationPetmate createReservePermate(Petmate petmate, int count) {
 		ReservationPetmate reservationPetmate = new ReservationPetmate();
 		reservationPetmate.setPetmate(petmate);
 		reservationPetmate.setCount(count);
 		reservationPetmate.setOrderPrice(petmate.getPrice());
+		reservationPetmate.setStatus(ReserveStatus.ORDER);
 		
 		
 		return reservationPetmate;
@@ -61,6 +66,7 @@ public class ReservationPetmate {
 	public int getTotalPrice() {
 		return orderPrice * count;
 	}
+	
 	
 	
 	

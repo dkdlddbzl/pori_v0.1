@@ -1,11 +1,14 @@
 package com.pori.controller;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -13,11 +16,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.pori.dto.MainPetmateDto;
 import com.pori.dto.PetmateFormDto;
 import com.pori.dto.PetmateSearchDto;
+import com.pori.dto.ReviewFormDto;
 import com.pori.entity.Petmate;
 import com.pori.service.PetmateService;
 
@@ -33,9 +38,10 @@ public class PetmateController {
 	//펫메 전체 리스트
 	@GetMapping(value= "/petmate/list")
 	public String petmateList(Model model, PetmateSearchDto petmateSearchDto,
-		 Optional<Integer> page) {
+		Optional<Integer> page) {
 		Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0 , 4);
 		Page<MainPetmateDto> petmates = petmateService.getMainPetmatePage(petmateSearchDto, pageable);
+		
 		
 		model.addAttribute("petmates", petmates);
 		model.addAttribute("petmateSearchDto",petmateSearchDto);
@@ -48,6 +54,7 @@ public class PetmateController {
 	@GetMapping(value = "/petmate/{petmateId}")
 	public String petmateDtl(Model model, @PathVariable("petmateId") Long petmateId) {
 		PetmateFormDto petmateFormDto = petmateService.getPetmateDtl(petmateId);
+		
 		model.addAttribute("petmate", petmateFormDto);
 		return "petmate/petmateDtl";
 	}
@@ -102,6 +109,17 @@ public class PetmateController {
 		
 		return "petmate/petmateListPage";
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	

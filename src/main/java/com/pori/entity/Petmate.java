@@ -2,6 +2,7 @@ package com.pori.entity;
 
 
 import com.pori.constrant.PetmateStatus;
+import com.pori.constrant.ReviewStatus;
 import com.pori.dto.PetmateFormDto;
 
 import jakarta.persistence.Column;
@@ -48,6 +49,9 @@ public class Petmate extends BaseEntity {
 	
 	private int followCount;
 	
+	@Enumerated(EnumType.STRING)
+	private ReviewStatus reviewStatus;
+	
 	
 	//petmate entity 수정
 	
@@ -59,12 +63,11 @@ public class Petmate extends BaseEntity {
 		this.runCount = petmateFormDto.getRunCount();
 		this.followCount = petmateFormDto.getFollowCount();
 		this.likeCount = petmateFormDto.getLikeCount();
+		this.reviewStatus = petmateFormDto.getReviewStatus();
 	}
 	
-	
-	
-	
-	
-	
+	public void updateStatus() {
+		this.reviewStatus = reviewStatus.Y;
+	}
 	
 }

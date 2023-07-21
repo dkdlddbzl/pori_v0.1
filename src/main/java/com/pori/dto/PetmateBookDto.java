@@ -1,6 +1,5 @@
 package com.pori.dto;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,25 +9,20 @@ import com.pori.constrant.PetmateStatus;
 import com.pori.constrant.ReviewStatus;
 import com.pori.entity.Petmate;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class PetmateFormDto {
+public class PetmateBookDto {
 	
 	
 	private Long id;
 	
-	@NotBlank(message = "펫메이트명은 필수 입력 값입니다")
 	private String petmateNm;
 	
-	@NotNull(message = "가격은 필수 입력 값입니다")
 	private int price;
 	
-	@NotBlank(message = "펫메이트 상세설명은 필수 입력입니다.")
 	private String petmateDetail;
 	
 	private PetmateStatus petmateStatus;
@@ -41,16 +35,15 @@ public class PetmateFormDto {
 	
 	private ReviewStatus reviewStatus;
 	
+	private Long memberId;
 	
 	//상품 이미지 정보를 저장
 	private List<PetmateImgDto> petmateImgDtoList = new ArrayList<>();
 	
-	private List<ReviewFormDto> reviewFormDtoList = new ArrayList<>();
 	
 	//상품 이미지 아이디들을 저장 -> 수정시에 이미지 아이디를 담아둘 용도
 	private List<Long> petmateImgIds = new ArrayList<>();
 	
-	private List<Long> reviewIds = new ArrayList<>();
 	
 	private static ModelMapper modelMapper = new ModelMapper();
 	
@@ -60,22 +53,9 @@ public class PetmateFormDto {
 	}
 	
 	//entity를 dto로 바꿔줌
-	public static PetmateFormDto of(Petmate petmate) {
-		return modelMapper.map(petmate, PetmateFormDto.class);
+	public static PetmateBookDto of(Petmate petmate) {
+		return modelMapper.map(petmate, PetmateBookDto.class);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 }

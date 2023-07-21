@@ -5,12 +5,13 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.pori.constrant.PetmateStatus;
 import com.pori.constrant.ReserveStatus;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -39,10 +40,7 @@ public class Reservation extends BaseEntity {
 	@JoinColumn(name="member_id")
 	private Member member;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="petmate_id")
-	private Petmate petmate;
-	
+	@Enumerated(EnumType.STRING)
 	private ReserveStatus status;
 	
 	private LocalDateTime reserveDate;
@@ -56,6 +54,7 @@ public class Reservation extends BaseEntity {
 		reservationPetmate.setReservation(this);
 	}
 	
+	//reservation 객체 생성
 	public static Reservation createReservation(Member member, List<ReservationPetmate> reservationPetmateList) {
 		Reservation reservation = new Reservation();
 		reservation.setMember(member);
@@ -70,13 +69,21 @@ public class Reservation extends BaseEntity {
 		return reservation;
 	}
 	
+	
+	//총 예약 금액
 	public int getTotalPrice() {
 		int totalPrice = 0;
-		for
+		for(ReservationPetmate reservationPetmate : reservationPetmates) {
+			totalPrice += reservationPetmate.getTotalPrice();
+		}
+		return totalPrice;
 	}
 	
 	
-	
+	//주문 취소
+	public void cancelReservation() {
+		this.status = status.CANCLE;
+	}
 	
 	
 }
