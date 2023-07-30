@@ -8,6 +8,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.thymeleaf.util.StringUtils;
 
 import com.pori.dto.BookHisDto;
 import com.pori.dto.BookOpenDto;
@@ -72,7 +73,14 @@ public class BookService {
 		// 현재 로그인한 회원의 이메일을 이용해서 회원 정보 조회
 		Member member = memberRepository.findByEmail(email);
 
-		Book book = bookOpenDto.createBook(member, petmate);
+		//예약할 펫메 엔티티 생성
+		List<BookPetmate> bookpetmateList = new ArrayList<>();
+		BookPetmate bookPetmate = BookPetmate.createBookPetmate(petmate, bookOpenDto.getBooksOpen(), bookOpenDto.getBookStatus() );
+		bookpetmateList.add(bookPetmate);
+		
+		
+		
+		Book book = Book.createBook(member, bookpetmateList, bookOpenDto.getBooksOpen(), petmate, bookOpenDto.getBookStatus() );
 		bookRepository.save(book);
 
 		return book.getId();
@@ -104,4 +112,47 @@ public class BookService {
 		  }
 		  return new PageImpl<BookHisDto>(bookHisDtos, pageable, totalCount);
 	  }
+	  
+	  //예약 삭제
+	  public void deleteBook(Long bookId) {
+		  Book book = bookRepository.findById(bookId)
+				  .orElseThrow(EntityNotFoundException::new);
+		  
+		  
+		  bookRepository.delete(book);
+	  }
+	  
+		//본인확인(현재 로그인한 사용자와 주문데이터를 생성한 사용자가 같은지 검사)
+		@Transactional(readOnly = true)
+		public boolean validateOrder(Long bookId, String email) {
+			Member curMember = memberRepository.findByEmail(email); //로그인한 사용자 찾기
+			Book book = bookRepository.findById(bookId)
+					         .orElseThrow(EntityNotFoundException::new); //주문내역
+			
+			Member savedMember = book.getMember(); //주문한 사용자 찾기
+			
+			//로그인한 사용자의 이메일과 주문한 사용자의 이메일이 같은지 최종 비교
+			if(!StringUtils.equals(curMember.getEmail(), savedMember.getEmail())) {
+				//같지 않으면
+				return false;
+			}
+			
+			return true;		
+		}
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
 }

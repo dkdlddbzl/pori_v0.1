@@ -37,7 +37,7 @@ public class BookPetmate {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="book_id")
-	private Book books;
+	private Book book;
 	
 	@Enumerated(EnumType.STRING)
 	private BookStatus bookStatus;
@@ -45,10 +45,11 @@ public class BookPetmate {
 	private String booksOpen;
 	
 	
-	public static BookPetmate createBookPetmate(Petmate petmate) {
+	public static BookPetmate createBookPetmate(Petmate petmate, String booksOpen, BookStatus bookStatus ) {
 		BookPetmate bookPetmate = new BookPetmate();
 		bookPetmate.setPetmate(petmate);
-		
+		bookPetmate.setBooksOpen(booksOpen);
+		bookPetmate.setBookStatus(bookStatus);
 		
 		return bookPetmate;
 	}

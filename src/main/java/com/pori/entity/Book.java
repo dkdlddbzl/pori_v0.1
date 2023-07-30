@@ -51,23 +51,29 @@ public class Book extends BaseEntity {
 	private String booksOpen;
 	
 	
-	@OneToMany(mappedBy = "books", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
 	private List<BookPetmate> bookPetmates = new ArrayList<>();
 	
 	
 	public void addBookPetmate(BookPetmate bookPetmate) {
 		this.bookPetmates.add(bookPetmate);
-		bookPetmate.setBooks(this);
+		bookPetmate.setBook(this);
 	}
 	
 	//book 객체 생성
-	public static Book createBook(Member member, List<BookPetmate> bookPetmateList) {
+	public static Book createBook(Member member, List<BookPetmate> bookPetmateList, String booksOpen, Petmate petmate
+			, BookStatus bookStatus) {
 		Book book = new Book();
 		book.setMember(member);
+		book.setBooksOpen(booksOpen);
+		book.setPetmate(petmate);
+		book.setBookStatus(bookStatus);
 		
 		for(BookPetmate bookPetmate : bookPetmateList) {
 			book.addBookPetmate(bookPetmate);
 		}
+		
+		
 		
 		return book;
 	}

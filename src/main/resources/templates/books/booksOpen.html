@@ -205,7 +205,7 @@ thead tr:nth-child(3) th {
               <div class="col-md-2 col-4 my-1 px-2"><div class="cell py-1" value="5:00PM">5:00PM</div></div>
             </div>
             <div class="row text-center mx-0">
-			<button class="form-control" type="submit" onclick="books()"><i class="fa fa-location-arrow"></i>예약조지기</button>
+			<button class="form-control" type="submit" onclick="books()"><i class="fa fa-location-arrow"></i>예약하기</button>
             </div>
           </div>
         </form>
@@ -323,7 +323,7 @@ function books() {
 	var header = $("meta[name='_csrf_header']").attr("content");
 	
 	
-	const createConf = confirm("예약을 갈기겠습니까?");
+	const createConf = confirm("예약오픈을 하시겠습니까?");
 	
 	if(!createConf) return; //취소버튼 누르면
 	
@@ -354,8 +354,8 @@ function books() {
 		success : function(result) {
 			var petmateId = $("#petmateId").val();
 			
-			alert("리뷰작성이 완료 되었습니다." + result);
-			location.href = '/petmate/' + petmateId;
+			alert("예약오픈이 완료 되었습니다." + result);
+			location.href = '/';
 		},
 		error : function(jqXHR, error) {
 			if(jqXHR.status == '401') {

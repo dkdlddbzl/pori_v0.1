@@ -12,7 +12,7 @@ import com.pori.entity.Book;
 public interface BookRepository extends JpaRepository<Book, Long> {
 	
 	
-	@Query("select i from Book i where i.member.email = : email order by i.booksOpen desc")
+	@Query("select i from Book i where i.member.email = :email order by i.booksOpen desc")
 	List<Book> findBooks(@Param("email") String email, Pageable pageable);
 	
 	

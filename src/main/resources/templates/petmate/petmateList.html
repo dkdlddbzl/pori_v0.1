@@ -57,6 +57,9 @@
 												class="fa fa-star"></i></a> <a href="#"><i
 												class="fa fa-star"></i></a>
 										</h5>
+										<h5>
+											<a th:href="'/admin/books/open/' + ${petmate.id}" sec:authorize="isAuthenticated()">예약오픈 하기</a>
+										</h5>
 									</div>
 
 								</div>

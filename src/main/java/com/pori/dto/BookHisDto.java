@@ -21,6 +21,7 @@ public class BookHisDto {
 		this.memberId = book.getMember().getId();
 		this.bookStatus = book.getBookStatus();
 		this.bookOpen = book.getBooksOpen();
+		this.petmateNm = book.getPetmate().getPetmateNm();
 	}
 	
 	private Long bookId;
@@ -28,6 +29,8 @@ public class BookHisDto {
 	private Long petmateId;
 	
 	private Long memberId;
+	
+	private String petmateNm;
 	
 	private BookStatus bookStatus;
 	

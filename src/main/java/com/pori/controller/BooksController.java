@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -98,10 +99,39 @@ public class BooksController {
 		model.addAttribute("books",bookHistDtoList);
 		model.addAttribute("maxPage", 5);
 		
-		return "books/list";
+		return "books/booksList";
+		
+	}
+	
+	
+	//예약삭제
+	@DeleteMapping("/books/list/{bookId}/delete")
+	public @ResponseBody ResponseEntity deleteBook(@PathVariable("bookId") Long bookId 
+			, Principal principal) {
+		
+		if(!bookService.validateOrder(bookId, principal.getName())) {
+			return new ResponseEntity<String>("예약 삭제 권한이 없습니다.", HttpStatus.FORBIDDEN);
+		}
+		
+		bookService.deleteBook(bookId);
+		
+		return new ResponseEntity<Long>(bookId, HttpStatus.OK);
 		
 		
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
