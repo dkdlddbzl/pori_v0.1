@@ -26,6 +26,8 @@ import com.pori.dto.BookOpenDto;
 import com.pori.dto.MainPetmateDto;
 import com.pori.dto.PetmateBookDto;
 import com.pori.dto.PetmateSearchDto;
+import com.pori.entity.Book;
+import com.pori.repository.BookRepository;
 import com.pori.service.BookService;
 import com.pori.service.MemberService;
 import com.pori.service.PetmateService;
@@ -120,7 +122,20 @@ public class BooksController {
 		
 	}
 	
-	
+	//예약오픈 전체리스트
+	@GetMapping(value= "/books/openlist")
+	public String bookOpenList(Model model, PetmateSearchDto petmateSearchDto,
+			Optional<Integer> page) {
+		
+		Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 4);
+		Page<MainPetmateDto> petmates = petmateService.getMainPetmatePage(petmateSearchDto, pageable);
+		Page<BookHisDto> bookHistDtoList = bookService.getOpenBookList(pageable);
+		model.addAttribute("petmates",petmates);
+		model.addAttribute("books",bookHistDtoList);
+		model.addAttribute("maxPage", 5);
+		return "books/booksOpenList";	
+		
+	}
 	
 	
 	

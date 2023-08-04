@@ -102,6 +102,14 @@ public class MemberController {
 	}
 	
 	
+	//맵화면
+	@GetMapping(value = "/members/map")
+	public String mapMember() {
+		return "member/memberMap";
+	}
+	
+
+	
 	
 	
 }

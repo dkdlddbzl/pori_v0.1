@@ -63,7 +63,6 @@ public class Member extends BaseEntity{
 		member.setRole(Role.ADMIN); //관리자로 가입할때
 		//member.setRole(Role.USER); //일반 사용자로 가입할떄
 		
-		
 		return member;
 	}
 	

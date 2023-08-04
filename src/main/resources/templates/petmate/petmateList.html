@@ -94,6 +94,34 @@
 					</ul>
 				</nav>
 			</div>
+				<div class="row" th:object="${petmateSearchDto}" style="height: 40px">
+							<div class="col-lg-2"></div>
+							<div class="col-lg-5" style="display: flex;">
+								<!-- 상품 등록일 -->
+								<select class="form-control" th:field="*{searchDateType}">
+									<option value="all">전체기간</option>
+									<option value="1d">1일</option>
+									<option value="1w">1주</option>
+									<option value="1m">1개월</option>
+									<option value="6m">6개월</option>
+								</select>
+								<!-- 상품판매 상태 -->
+								<!-- 상품명, 등록자 선택 -->
+								<select th:field="*{searchBy}" class="form-control">
+									<option value="petmateNm">상품명</option>
+									<option value="createdBy">등록자</option>
+								</select>
+							</div>
+							<div class="col-lg-3">
+								<div style="display: flex;">
+									<input type="text" class="form-control" placeholder="검색어 입력"
+										th:field="*{searchQuery}">
+									<button id="searchBtn" type="submit"
+										class="btn btn-primary mb-3">검색</button>
+								</div>
+							</div>
+							<div class="col-lg-2"></div>
+						</div>
 
 			<!-- Team End -->
 			</th:block>
@@ -119,7 +147,7 @@
 			var searchQuery = $("#searchQuery").val();
 
 			//주소이동
-			location.href = "/petmate/list/" + page + "&searchBy=" + searchBy
+			location.href = "/petmate/list/" + page + "?searchBy=" + searchBy
 					+ "&searchQuery=" + searchQuery;
 		}
 	</script>

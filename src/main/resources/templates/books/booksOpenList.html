@@ -46,18 +46,17 @@
                         <div class="row g-3">
 							<th:block th:each="book : ${books.getContent()}">
                             <div class="col-lg-4 col-md-6 col-sm-6">
-                                <div class="product__item" th:each="bookPetmate: ${book.bookPetmateDtoList}" >
+                                <div class="product__item" th:each="bookPetmate: ${book.bookPetmateDtoList}">
                                    <div 
                                     class="product__item__pic set-bg" th:data-setbg="${bookPetmate.imgUrl}"
 									th:style="'background-image:url('+ ${bookPetmate.imgUrl} +');'">
-                                        <div class="ep">ID : [[${book.bookId}]]</div>
-                                        <div class="comment"><i class="fa-solid fa-calendar-check"></i> 예약 시간 : [[${book.bookOpen}]]<br>펫메이트 이름 : [[${book.petmateNm}]]</div>
+                                        <div class="ep">ID : [[${book.bookId}]] </div>
+                                        <div class="comment"><i class="fa-solid fa-calendar-check"></i> 예약 시간 : [[${book.bookOpen}]] <br>펫메이트 이름 : [[${book.petmateNm}]] </div>
                                     </div>
                                     <div class="product__item__text">
                                         <ul class="text-center px-1">
                                             <li>
-											<button type="button" class="btn btn-outline-secondary" th:value="${book.bookId}" onclick="deleteBook(this.value)">예약삭제</button>
-											<button type="button" class="btn btn-outline-secondary" onclick="(this.value)">예약수정</button>
+											<button type="button" class="btn btn-outline-secondary">예약하기</button>
                                             </li>
                                         </ul>
                                         <h5 class="text-center" ><a href="#"> </a></h5>
@@ -73,7 +72,7 @@
 					
 					
 					
-		<div class="row justify-content-center py-5">
+	<!-- 	<div class="row justify-content-center py-5">
 				<nav
 					th:with="start=${(books.number/maxPage)*maxPage + 1}
 			                 ,end=(${(books.totalPages == 0) ? 1 : (start + (maxPage - 1) < books.totalPages ? start + (maxPage - 1) : books.totalPages)})"
@@ -97,7 +96,7 @@
 						</li>
 					</ul>
 				</nav>
-			</div>
+			</div> -->
 					
 			
 					

@@ -13,6 +13,7 @@ import org.thymeleaf.util.StringUtils;
 import com.pori.dto.BookHisDto;
 import com.pori.dto.BookOpenDto;
 import com.pori.dto.BookPetmateDto;
+import com.pori.dto.MainPetmateDto;
 import com.pori.dto.PetmateBookDto;
 import com.pori.dto.PetmateFormDto;
 import com.pori.dto.PetmateImgDto;
@@ -140,15 +141,31 @@ public class BookService {
 			return true;		
 		}
 	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  
+		
+		//예약오픈한 리스트 가져오기
+		@Transactional(readOnly = true)
+		public Page<BookHisDto> getOpenBookList(Pageable pageable) {
+			
+			
+			  List<Book> books = bookRepository.findAllByOrderByIdDesc();
+			  
+			  Long totalCount = bookRepository.count();
+			  
+			  List<BookHisDto> bookHisDtos = new ArrayList<>();
+			  for(Book book : books) {
+			  BookHisDto bookHisDto = new BookHisDto(book);
+			  List<BookPetmate> bookPetmates = book.getBookPetmates();
+			  	
+			  	for(BookPetmate bookPetmate : bookPetmates) {
+			  		PetmateImg petmateImg = petmateImgRepository.findByPetmateIdAndRepimgYn(bookPetmate.getPetmate().getId(), "Y");
+			  		BookPetmateDto bookPetmateDto = new BookPetmateDto(bookPetmate, petmateImg.getImgUrl());
+			  		bookHisDto.addBookPetmateDto(bookPetmateDto);
+			  	}
+			  	bookHisDtos.add(bookHisDto);
+			  }
+			  return new PageImpl<BookHisDto>(bookHisDtos, pageable, totalCount);
+		  }
+		
 	  
 	  
 	  

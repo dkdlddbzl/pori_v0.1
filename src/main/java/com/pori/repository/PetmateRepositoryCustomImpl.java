@@ -87,7 +87,7 @@ public class PetmateRepositoryCustomImpl implements PetmateRepositoryCustom {
 				.from(petmateImg)
 				.join(petmateImg.petmate, petmate)
 				.where(petmateImg.repimgYn.eq("Y"))
-				.where(petmateNmLike(petmateSearchDto.getSearchQuery()))
+				.where(searchByLike(petmateSearchDto.getSearchBy(), petmateSearchDto.getSearchQuery()))
 				.orderBy(petmate.id.desc())
 				.offset(pageable.getOffset())
 				.limit(pageable.getPageSize())
@@ -99,7 +99,7 @@ public class PetmateRepositoryCustomImpl implements PetmateRepositoryCustom {
 				.from(petmateImg)
 				.join(petmateImg.petmate, petmate)
 				.where(petmateImg.repimgYn.eq("Y"))
-				.where(petmateNmLike(petmateSearchDto.getSearchQuery()))
+				.where(searchByLike(petmateSearchDto.getSearchBy(), petmateSearchDto.getSearchQuery()))
 				.fetchOne()
 				;
 		

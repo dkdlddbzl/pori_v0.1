@@ -36,9 +36,9 @@ public class PetmateController {
 	private final PetmateService petmateService;
 	
 	//펫메 전체 리스트
-	@GetMapping(value= "/petmate/list")
+	@GetMapping(value= {"/petmate/list", "/petmate/list/{page}"})
 	public String petmateList(Model model, PetmateSearchDto petmateSearchDto,
-		Optional<Integer> page) {
+			@PathVariable("page") Optional<Integer> page) {
 		Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0 , 4);
 		Page<MainPetmateDto> petmates = petmateService.getMainPetmatePage(petmateSearchDto, pageable);
 		

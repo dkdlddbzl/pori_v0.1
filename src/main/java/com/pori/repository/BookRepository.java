@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import com.pori.entity.Book;
+import com.pori.entity.Review;
 
 public interface BookRepository extends JpaRepository<Book, Long> {
 	
@@ -17,7 +18,10 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 	
 	
 	@Query("select count(i) from Book i where i.member.email = :email")
-	Long countBook(@Param("email") String email);	
+	Long countBook(@Param("email") String email);
+
+
+	List<Book> findAllByOrderByIdDesc();
 	
 	
 }
