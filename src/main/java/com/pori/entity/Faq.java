@@ -42,15 +42,14 @@ public class Faq extends BaseEntity {
 	@Column(nullable = false, columnDefinition = "longtext")
 	private String faqContent;
 	
-	
+
+
 	// faq entity 수정
 	public void updateFaq(FaqFormDto faqFormDto) {
 		this.faqContent = faqFormDto.getFaqContent();
 		this.faqRole = faqFormDto.getFaqRole();
 		this.faqTitle = faqFormDto.getFaqTitle();
 	}
-	
-	
 	
 	
 	

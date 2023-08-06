@@ -2518,7 +2518,7 @@ li.ac_item {}
 											<div class="con_area">
 											[[${faq.faqContent}]]
 											<br>
-											<a class="faqupdate" sec:authorize="isAuthenticated()" href="/members/createfaq">수정하기</a>
+											<a class="faqupdate" sec:authorize="isAuthenticated()" th:href="'/members/centers/' + ${faq.Id}">수정하기</a>
 											</div>
 										</div>
 									</li>
@@ -2594,6 +2594,9 @@ if (isDisplayed) {
     
 });
 });
+
+
+
 
 
 

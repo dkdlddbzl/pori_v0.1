@@ -12,4 +12,9 @@ import com.pori.entity.Faq;
 public interface FaqRepository extends JpaRepository<Faq, Long> {
 	
 	Page<Faq> findAllByOrderByIdDesc(Pageable pageable);
+	
+	
+	
+	
+	
 }

@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.thymeleaf.util.StringUtils;
 
 import com.pori.dto.FaqFormDto;
 import com.pori.entity.Faq;
@@ -13,6 +14,7 @@ import com.pori.entity.Member;
 import com.pori.repository.FaqRepository;
 import com.pori.repository.MemberRepository;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -34,6 +36,7 @@ public class FaqService {
 		faqRepository.save(faq);
 		
 		
+		
 		return faq.getId();
 		
 	}
@@ -51,6 +54,52 @@ public class FaqService {
 		return faqPage;
 		
 	}
+	
+	
+	
+	
+	
+	
+	
+	//faq 수정하기
+	public Long updateFaq(FaqFormDto faqFormDto) {
+		
+		Faq faq = faqRepository.findById(faqFormDto.getId()).orElseThrow(EntityNotFoundException::new);
+		
+		
+		faq.updateFaq(faqFormDto);
+		
+		
+		
+		return faq.getId();
+	}
+	
+	
+	//본인확인
+	@Transactional(readOnly = true)
+	public boolean validateFaq(Long faqId, String email) {
+		Member curMember = memberRepository.findByEmail(email);
+		Faq faq = faqRepository.findById(faqId).orElseThrow(EntityNotFoundException::new);
+		
+		Member savedMember = faq.getMember();
+		
+		if(!StringUtils.equals(curMember.getEmail(), savedMember.getEmail())) {
+			return false;
+		}
+		
+		return true;
+	}
+	
+	//faq 삭제
+	public void deleteFaq(Long faqId) {
+		Faq faq = faqRepository.findById(faqId).orElseThrow(EntityNotFoundException::new);
+		
+		faqRepository.delete(faq);
+	}
+	
+	
+	
+	
 	
 	
 }
