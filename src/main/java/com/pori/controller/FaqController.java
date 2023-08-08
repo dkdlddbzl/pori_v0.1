@@ -104,7 +104,7 @@ public class FaqController {
 	public String faqUpdate(@Valid FaqFormDto faqFormDto, Model model, BindingResult bindingResult) {
 		
 		if(bindingResult.hasErrors()) {
-			return "/members/center";
+			return "member/faqUpdate";
 		}
 		
 		
@@ -113,7 +113,7 @@ public class FaqController {
 		} catch (Exception e) {
 			e.printStackTrace();
 			model.addAttribute("errorMessage", "FAQ 수정 중 에러가 발생했습니다.");
-			return "/members/center";
+			return "member/faqUpdate";
 		}
 		return "redirect:/";
 	}

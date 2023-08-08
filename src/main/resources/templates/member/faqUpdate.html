@@ -2732,7 +2732,7 @@ input[type=radio] + label {
 			<div class="acodiList acodi_type1">
 
 				<section class="wrap_board_view2">
-					<form role="form" action="/members/createfaq" method="post"
+					<form role="form" th:action="@{'/members/centers/' + ${faqId}}" method="post"
 					th:object="${faq}"
 					name="faqForm" >
 					

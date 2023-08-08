@@ -63,7 +63,6 @@ public class MemberService implements UserDetailsService{
 	
 	//회원 정보 가져오기
 	public MemberPageDto getMemberPage(String email) {
-		System.out.println(email + "asdasd");
 		Member member = memberRepository.findByEmail(email);
 		MemberPageDto memberPageDto = MemberPageDto.of(member);
 		
