@@ -36,20 +36,20 @@ public class NoticeController {
 	private final NoticeRepository noticeRepository;
 	
 	//notice 생성페이지
-	@GetMapping(value = "")
+	@GetMapping(value = "/notice/create")
 	public String noticeForm(Model model) {
 		model.addAttribute("noticeFormDto", new NoticeFormDto());
 		
-		return "/";
+		return "/notice/createNotice";
 	}
 	
 	//notice 등록(insert)
-	@PostMapping(value = "")
+	@PostMapping(value = "/notice/create")
 	public String noticeNew(@Valid NoticeFormDto noticeFormDto, BindingResult bindingResult,
 			Model model, Principal principal) {
 		
 		if(bindingResult.hasErrors()) {
-			return "/";
+			return "/notice/createNotice";
 		}
 		String email = principal.getName();
 		
@@ -58,13 +58,13 @@ public class NoticeController {
 		} catch (Exception e) {
 			e.printStackTrace();
 			model.addAttribute("errorMessage", "공지사항등록 중 에러가 발생했습니다.");
-			return "/";
+			return "/notice/createNotice";
 		}
-		return "redirect:/";
+		return "redirect:/notice/list";
 	}
 	
 	//notice 리스트
-	@GetMapping(value = "")
+	@GetMapping(value = {"/notice/list", "/notice/list/{page}" })
 	public String noticeMainList(Model model,@PathVariable("page") Optional<Integer> page) {
 		Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 6);
 		Page<Notice> notices = noticeService.getMainNoticeDtl(pageable);
@@ -74,12 +74,12 @@ public class NoticeController {
 		model.addAttribute("totalCount",totalCount);
 		model.addAttribute("maxPage", 5);
 		
-		return "/";
+		return "/notice/listNotice";
 	}
 	
 	
 	//notice 수정페이지 보기
-	@GetMapping(value = "")
+	@GetMapping(value = "/notice/update/{noticeId}")
 	public String noticeDtl(@PathVariable("noticeId") Long noticeId, Model model) {
 		
 		try {
@@ -89,7 +89,7 @@ public class NoticeController {
 			e.printStackTrace();
 			model.addAttribute("errorMessage", "공지사항을 가져올때 에러가 발생했습니다.");
 			model.addAttribute("notice", new Notice());
-			return "/";
+			return "/notice/listNotice";
 		}
 		
 		return "/";
@@ -97,11 +97,11 @@ public class NoticeController {
 	
 	
 	//notice 수정(update)
-	@PostMapping(value = "" )
+	@PostMapping(value = "/notice/update/{noticeId}" )
 	public String noticeUpdate(@Valid NoticeFormDto noticeFormDto, Model model, BindingResult bindingResult) {
 		
 		if(bindingResult.hasErrors()) {
-			return "/";
+			return "/notice/listNotice";
 		}
 		
 		
@@ -110,14 +110,14 @@ public class NoticeController {
 		} catch (Exception e) {
 			e.printStackTrace();
 			model.addAttribute("errorMessage", "공지사항 수정 중 에러가 발생했습니다.");
-			return "/";
+			return "/notice/listNotice";
 		}
-		return "redirect:/";
+		return "redirect:/notice/listNotice";
 	}
 	
 	
 	// notice 삭제(delete)
-	@DeleteMapping("")
+	@DeleteMapping("/notice/update/{noticeId}/delete")
 	public @ResponseBody ResponseEntity deleteNotice(@PathVariable("noticeId") Long noticeId, Principal principal) {
 		
 		//1. 본인인증
@@ -131,5 +131,21 @@ public class NoticeController {
 		
 	}
 	
+	//notice 상세보기
+	@GetMapping(value = "/notice/read/{noticeId}")
+	public String noticeDtllist(@PathVariable("noticeId") Long noticeId, Model model) {
+		
+		try {
+			Notice notice = noticeRepository.findById(noticeId).orElseThrow(EntityNotFoundException::new);
+			model.addAttribute("notice", notice);
+		} catch (Exception e) {
+			e.printStackTrace();
+			model.addAttribute("errorMessage", "공지사항을 가져올때 에러가 발생했습니다.");
+			model.addAttribute("notice", new Notice());
+			return "/notice/listNotice";
+		}
+		
+		return "/notice/readNotice";
+	}
 	
 }

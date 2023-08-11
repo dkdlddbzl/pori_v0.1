@@ -1,0 +1,1 @@
+INSERT INTO notice (notice_title, notice_content) VALUES("123", "123");

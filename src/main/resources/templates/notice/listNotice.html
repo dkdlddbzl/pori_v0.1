@@ -3,11 +3,6 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layouts/layout1}">
 	
-<head> <!--아이작스로 보낼때 메타  -->
-	<meta name="_csrf" th:content="${_csrf.token}" />
-	<meta name="_csrf_header" th:content="${_csrf.headerName}" />
-</head>
-	
 <!-- 각 페이지의 CSS가 작성될 위치 -->
 <th:block layout:fragment="css">
 <style>
@@ -1194,7 +1189,6 @@ button.swiper-pagination-bullet {
   -ms-flex: 0 0 auto;
   flex: 0 0 auto;
   margin-left: 20px;
-  background-color: white;
 }
 
 .btn_ac a:first-child,
@@ -1231,7 +1225,7 @@ button.swiper-pagination-bullet {
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  margin-bottom: 60px;
+  margin-bottom: 30px;
 }
 
 .list_top_ui .list_total {
@@ -2423,6 +2417,37 @@ li.ac_item {}
 	color: #DC3545;
 }
 
+.board_list_type2 li a .num {
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 auto;
+    flex: 0 0 auto;
+    display: inline-block;
+    width: 100px;
+    font-family: "Noto Sans KR";
+    font-weight: 300;
+    font-size: 20px;
+    color: #111;
+    text-align: center;
+}
+
+.board_list_type2 li a .tag {
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 auto;
+    flex: 0 0 auto;
+    display: inline-block;
+    width: 64px;
+    height: 32px;
+    font-family: "HGGGothicssi";
+    font-weight: 400;
+    font-size: 15px;
+    color: #fff;
+    line-height: 32px;
+    text-align: center;
+    background-color: #4e2bf4;
+    border-radius: 8px;
+    margin-right: 25px;
+}
+
 </style>
 
 
@@ -2442,9 +2467,9 @@ li.ac_item {}
 					<div class="tab_ui type1 pageTabSwiper">
 						<div class="tab_wrap swiper-container swiper-container-horizontal">
 							<ul class="tab_inner swiper-wrapper">
-								<li class="swiper-slide tab swiper-slide-active"><a href="/members/center"><span>FAQ</span></a></li>
-								<li class="swiper-slide tab active swiper-slide-next"><a href="/members/chat"><span>1:1 문의</span></a></li>
-								<li class="swiper-slide tab"><a href="/notice/list"><span>공지사항</span></a></li>
+								<li class="swiper-slide tab  swiper-slide-active"><a href="/members/center"><span>FAQ</span></a></li>
+								<li class="swiper-slide tab swiper-slide-next"><a href="/members/chat"><span>1:1 문의</span></a></li>
+								<li class="swiper-slide tab active"><a href="/notice/list" ><span>공지사항</span></a></li>
 								<li class="swiper-slide tab"><a ><span>상담톡 문의</span></a></li>
 							</ul>
 						<span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span></div>
@@ -2453,32 +2478,81 @@ li.ac_item {}
 				<!--// pageTab -->
 			</div>
 			
-			<!-- tab -->
-			<div class="tab_ui type2 tabSwiper py-5">
-				<div class="tab_wrap swiper-container swiper-container-horizontal swiper-container-free-mode">
-				<span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span></div>
-			</div>
-			<!--// tab -->
-			
-			<section class="wrap_con">
+			<section class="wrap_con py-5">
 				<div class="layout1">
-					<div class="list_top_ui justify-content-center">
-						<form role="form" action="/members/chat" method="post"
-					th:object="${oneBoardsDto}"
-					name="faqForm" >
-					
-					<input type="hidden" th:field="*{id}" />
-						<!-- 게시글 영역 -->
-						<div class="viewpage_edit">
-							<!-- 컨텐츠 불러오는 영역 -->
-						<div class="btn_area btn_ac py-5">
-							<button class="btn_typeB1"><span>1:1 문의하기</span></button>
+					<!-- list top -->
+					<div class="list_top_ui">
+						<div class="list_total">총 <em>[[${totalCount}]]건</em></div>
+						<div class="list_total" sec:authorize="isAuthenticated()">&nbsp;&nbsp;<a href="/notice/create">공지사항 등록</a></div>
+						<!-- 검색어 입력 시 -->
+						
+						<div class="search_area">
+							<div class="search_bundle">
+								<div class="inp_search">
+									<form name="faqDtlForm" id="faqDtlForm" method="post" action="/cu/cmct/faqDtlList.nhd">
+										<input type="hidden" name="pageSize" id="pageSize" value="10">
+										<input type="hidden" name="pageIndex" id="pageIndex" value="0">
+										<input type="hidden" name="faqTypeGbcd" id="faqTypeGbcd" value="">
+										<input type="search" name="searchStr" id="searchStr" class="inp_self" placeholder="검색어를입력해주세요.">
+										<button type="button" class="btn_search" onclick="doSearch( '');"><span class="hidden"></span></button>
+									</form>
+								</div>
+							</div>
 						</div>
 					</div>
-					<input type="hidden" th:name="${_csrf.parameterName}"
-								th:value="${_csrf.token}">
-					</form>
-					</div>
+					<!--// list top -->
+
+					<!-- list -->
+					
+						<div class="board_list_type2">
+							<th:block th:each="notice, status: ${notices.getContent()}">
+							<ul class="py-1">
+									<li class="ac_item" th:data-target="${notice.id}">
+									<a th:href="@{'/notice/read/' + ${notice.id}}">
+											<span class="num">[[${notice.id}]]</span>
+											<span class="tag">공지</span>
+											<p class="subject"><span class="kinds"></span>[[${notice.noticeTitle}]]</p>
+											<div class="date">[[${notice.regTime}]]</div>
+									</a>
+									</li>
+							</ul>
+							</th:block>
+						</div>
+					
+					<!--// list -->
+
+					<!-- paging -->
+					
+						<!-- pc -->
+						<div class="wrap_paging mo_none">
+						<nav
+							th:with="start=${(notices.number/maxPage)*maxPage + 1}
+			                 ,end=(${(notices.totalPages == 0) ? 1 : (start + (maxPage - 1) < notices.totalPages ? start + (maxPage - 1) : notices.totalPages)})"
+							>
+							<pagination>
+								<ul class="pagination">
+												<li class="pagination-page page-item"
+													th:classappend="${notices.first}?'disabled'"
+													>
+													<a 
+													class="page-link"
+													th:href="@{'/members/center/' + ${notices.number-1}}">이전</a></li>
+													
+												<li class="pagination-page page-item"
+													th:each="page: ${#numbers.sequence(start, end)}"
+													th:classappend="${notices.number eq page-1}?'active':''">
+													<a class="page-link"
+													 th:inline="text"
+													 th:href="@{'/members/center/' + ${page-1}}">[[${page}]]</a></li>
+													 
+												<li class="pagination-page page-item"
+													th:classappend="${notices.last}?'disabled'">
+													<a class="page-link"
+													th:href="@{'/members/center/' + ${notices.number+1}}">다음</a></li>
+								</ul>
+							</pagination>
+						 </nav>
+						</div>
 				</div>
 			</section>
 			
@@ -2489,8 +2563,6 @@ li.ac_item {}
 <th:block layout:fragment="script">
 <script type="text/javascript" th:src="@{/js/cookie.js}"></script>
 <script th:inline="javascript">
-
-
 
 
 </script>

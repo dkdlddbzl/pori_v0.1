@@ -29,8 +29,16 @@ public class NoticeService {
 		Member member = memberRepository.findByEmail(email);
 		Notice notice = noticeFormDto.createNotice(member);
 		noticeRepository.save(notice);
+		
+		/*
+		 * Notice no1 = new Notice(); no1.setNoticeContent("asd");
+		 * no1.setNoticeTitle("dkdk"); no1.setMember(member);
+		 * noticeRepository.save(no1);
+		 */
+		
 		return notice.getId();
 	}
+	
 	
 	//notice 가져오기
 	@Transactional(readOnly = true)

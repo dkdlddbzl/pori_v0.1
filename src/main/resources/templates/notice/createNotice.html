@@ -2682,7 +2682,7 @@ input[type=radio] + label {
 		<div class="layout1">
 			<h2 class="tit">고객센터</h2>
 			<p class="desc">
-				PoppyRunning에 대해 궁금하신 점이 있다면<br>무엇이든 물어보세요!
+				OSTB에 대해 궁금하신 점이 있다면<br>무엇이든 물어보세요!
 			</p>
 		</div>
 		<!-- pageTab -->
@@ -2690,14 +2690,14 @@ input[type=radio] + label {
 			<div class="tab_ui type1 pageTabSwiper">
 				<div class="tab_wrap swiper-container swiper-container-horizontal">
 					<ul class="tab_inner swiper-wrapper">
-						<li class="swiper-slide tab active swiper-slide-active"><a
+						<li class="swiper-slide tab  swiper-slide-active"><a
 							href="/members/center"
 							><span>FAQ</span></a></li>
 						<li class="swiper-slide tab swiper-slide-next"><a
 							href="/members/chat"
 							><span>1:1
 									문의</span></a></li>
-						<li class="swiper-slide tab"><a
+						<li class="swiper-slide tab active"><a
 							href="/notice/list"
 							><span>공지사항</span></a></li>
 						<li class="swiper-slide tab"><a
@@ -2714,6 +2714,7 @@ input[type=radio] + label {
 	</div>
 
 	<!-- tab -->
+	
 	<!--// tab -->
 
 	<section class="wrap_con">
@@ -2724,9 +2725,9 @@ input[type=radio] + label {
 			<div class="acodiList acodi_type1">
 
 				<section class="wrap_board_view2">
-					<form role="form" action="/members/createfaq" method="post"
-					th:object="${faqFormDto}"
-					name="faqForm" >
+					<form role="form" action="/notice/create" method="post"
+					th:object="${noticeFormDto}"
+					name="noticeForm" >
 					
 					<input type="hidden" th:field="*{id}" />
 						<!-- 게시글 영역 -->
@@ -2735,25 +2736,14 @@ input[type=radio] + label {
 					<div class="wrap_box">
 						<div class="inner600">
 							<div class="login_input">
-									<div class="select_ui py-3">
-										<select th:for="faqRole" name="faqRole" id="faqRole" th:field="*{faqRole}">
-											<option value="" >카테고리선택</option>
-													<option th:value="'회원'" th:text="회원" >회원</option>
-													<option th:value="'포인트'" th:text="포인트" >포인트</option>
-													<option th:value="'혜택'" th:text="혜택" >혜택</option>
-													<option th:value="'친구'" th:text="친구" >친구</option>
-										</select>
-										<p th:if="${#fields.hasErrors('faqRole')}" th:errors="*{faqRole}"
-										class="fieldError">Incorrect Data</p>
-									</div>
 									<div class="inp_bundle custId">
-										<input type="text" id="faqTitle" name="faqTitle"  class="inp flex"  th:field="*{faqTitle}" placeholder="제목">
-										<p th:if="${#fields.hasErrors('faqTitle')}" th:errors="*{faqTitle}"
+										<input type="text" id="noticeTitle" name="noticeTitle"  class="inp flex"  th:field="*{noticeTitle}" placeholder="제목">
+										<p th:if="${#fields.hasErrors('noticeTitle')}" th:errors="*{noticeTitle}"
 								class="fieldError">Incorrect Data</p>
 									</div>
 									<div class="inp_bundle mt custPwd textarea" >
-										<textarea id="faqContent" name="faqContent"class="inp flex" th:field="*{faqContent}" placeholder="컨텐츠 내용"></textarea>
-										<p th:if="${#fields.hasErrors('faqTitle')}" th:errors="*{faqContent}"
+										<textarea id="noticeContent" name="noticeContent"class="inp flex" th:field="*{noticeContent}" placeholder="컨텐츠 내용"></textarea>
+										<p th:if="${#fields.hasErrors('noticeTitle')}" th:errors="*{noticeContent}"
 								class="fieldError">Incorrect Data</p>
 									</div>
 							</div>

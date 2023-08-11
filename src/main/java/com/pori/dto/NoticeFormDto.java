@@ -38,5 +38,12 @@ public class NoticeFormDto {
 		return modelMapper.map(notice, NoticeFormDto.class);
 	}
 	
+	public Notice insertNotice() {
+		return modelMapper.map(this, Notice.class);
+	}
+	
+	
+	
+	
 	
 }
