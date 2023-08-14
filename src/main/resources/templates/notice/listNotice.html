@@ -2536,19 +2536,19 @@ li.ac_item {}
 													>
 													<a 
 													class="page-link"
-													th:href="@{'/members/center/' + ${notices.number-1}}">이전</a></li>
+													th:href="@{'/notice/list/' + ${notices.number-1}}">이전</a></li>
 													
 												<li class="pagination-page page-item"
 													th:each="page: ${#numbers.sequence(start, end)}"
 													th:classappend="${notices.number eq page-1}?'active':''">
 													<a class="page-link"
 													 th:inline="text"
-													 th:href="@{'/members/center/' + ${page-1}}">[[${page}]]</a></li>
+													 th:href="@{'/notice/list/' + ${page-1}}">[[${page}]]</a></li>
 													 
 												<li class="pagination-page page-item"
 													th:classappend="${notices.last}?'disabled'">
 													<a class="page-link"
-													th:href="@{'/members/center/' + ${notices.number+1}}">다음</a></li>
+													th:href="@{'/notice/list/' + ${notices.number+1}}">다음</a></li>
 								</ul>
 							</pagination>
 						 </nav>

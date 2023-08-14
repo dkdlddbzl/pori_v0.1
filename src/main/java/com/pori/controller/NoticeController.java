@@ -89,10 +89,10 @@ public class NoticeController {
 			e.printStackTrace();
 			model.addAttribute("errorMessage", "공지사항을 가져올때 에러가 발생했습니다.");
 			model.addAttribute("notice", new Notice());
-			return "/notice/listNotice";
+			return "/notice/list";
 		}
 		
-		return "/";
+		return "/notice/updateNotice";
 	}
 	
 	
@@ -101,7 +101,7 @@ public class NoticeController {
 	public String noticeUpdate(@Valid NoticeFormDto noticeFormDto, Model model, BindingResult bindingResult) {
 		
 		if(bindingResult.hasErrors()) {
-			return "/notice/listNotice";
+			return "/notice/list";
 		}
 		
 		
@@ -110,9 +110,9 @@ public class NoticeController {
 		} catch (Exception e) {
 			e.printStackTrace();
 			model.addAttribute("errorMessage", "공지사항 수정 중 에러가 발생했습니다.");
-			return "/notice/listNotice";
+			return "/notice/list";
 		}
-		return "redirect:/notice/listNotice";
+		return "redirect:/notice/list";
 	}
 	
 	

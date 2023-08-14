@@ -30,10 +30,12 @@ public class NoticeService {
 		Notice notice = noticeFormDto.createNotice(member);
 		noticeRepository.save(notice);
 		
-		/*
-		 * Notice no1 = new Notice(); no1.setNoticeContent("asd");
-		 * no1.setNoticeTitle("dkdk"); no1.setMember(member);
-		 * noticeRepository.save(no1);
+		/* 자동 인서트
+		  Notice no1 = new Notice();
+		  no1.setNoticeContent("asd");
+		  no1.setNoticeTitle("dkdk");
+		  no1.setMember(member);
+		  noticeRepository.save(no1);
 		 */
 		
 		return notice.getId();
