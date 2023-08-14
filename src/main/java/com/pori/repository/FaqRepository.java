@@ -13,7 +13,7 @@ public interface FaqRepository extends JpaRepository<Faq, Long> {
 	
 	Page<Faq> findAllByOrderByIdDesc(Pageable pageable);
 	
-	
+	Page<Faq> findByFaqRoleOrderByIdDesc(String FaqRole, Pageable pageable);
 	
 	
 	

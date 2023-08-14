@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.thymeleaf.util.StringUtils;
 
 import com.pori.dto.FaqFormDto;
+import com.pori.dto.FaqSearchDto;
 import com.pori.entity.Faq;
 import com.pori.entity.Member;
 import com.pori.repository.FaqRepository;
@@ -98,8 +99,12 @@ public class FaqService {
 	}
 	
 	
-	
-	
+	//faq 검색
+	@Transactional(readOnly = true)
+	public Page<Faq> getSearchFaq(FaqSearchDto faqSearchDto, Pageable pageable, String faqRole) {
+		Page<Faq> faqPage = faqRepository.findByFaqRoleOrderByIdDesc(faqRole, pageable);
+		return faqPage;
+	}
 	
 	
 }
