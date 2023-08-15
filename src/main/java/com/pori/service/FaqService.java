@@ -99,12 +99,32 @@ public class FaqService {
 	}
 	
 	
-	//faq 검색
+	//faq 회원
 	@Transactional(readOnly = true)
-	public Page<Faq> getSearchFaq(FaqSearchDto faqSearchDto, Pageable pageable, String faqRole) {
-		Page<Faq> faqPage = faqRepository.findByFaqRoleOrderByIdDesc(faqRole, pageable);
-		return faqPage;
+	public Page<Faq> getFaqMember(Pageable pageable) {
+		return faqRepository.getFaqMember(pageable);
 	}
+	
+	//faq 포인트
+	@Transactional(readOnly = true)
+	public Page<Faq> getFaqPoint(Pageable pageable) {
+		return faqRepository.getFaqPoint(pageable);
+	}
+	
+	//faq 혜택
+	@Transactional(readOnly = true)
+	public Page<Faq> getFaqBenefit(Pageable pageable) {
+		return faqRepository.getFaqBenefit(pageable);
+	}
+	
+	//faq 친구
+	@Transactional(readOnly = true)
+	public Page<Faq> getFaqFrend(Pageable pageable) {
+		return faqRepository.getFaqFrend(pageable);
+	}
+	
+	
+	
 	
 	
 }

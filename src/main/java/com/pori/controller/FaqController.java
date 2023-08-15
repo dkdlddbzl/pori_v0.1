@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.pori.dto.FaqFormDto;
+import com.pori.dto.FaqSearchDto;
 import com.pori.entity.Faq;
 import com.pori.repository.FaqRepository;
 import com.pori.service.FaqService;
@@ -63,7 +64,8 @@ public class FaqController {
 	
 	// faq 리스트
 	@GetMapping(value = { "/members/center", "/members/center/{page}" } )
-	public String faqMainList(Model model,@PathVariable("page") Optional<Integer> page) {
+	public String faqMainList(Model model,@PathVariable("page") Optional<Integer> page
+			 ) {
 		Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 6);
 		Page<Faq> faqs = faqService.getMainFaqDtl(pageable);
 		Long totalCount = faqRepository.count();
@@ -135,9 +137,60 @@ public class FaqController {
 	}
 	
 	
+	// faq 회원
+	@GetMapping(value = { "/members/center/member", "/members/center/member/{page}" } )
+	public String faqMemberlist(Model model,@PathVariable("page") Optional<Integer> page) {
+		Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 6);
+		Long totalCount = faqRepository.getFaqMemberTotal();
+		Page<Faq> faqs = faqService.getFaqMember(pageable);
+		
+		model.addAttribute("faqs",faqs);
+		model.addAttribute("totalCount",totalCount);
+		model.addAttribute("maxPage", 5);
+		
+		return "member/faqMember";
+	}
 	
+	// faq 포인트
+	@GetMapping(value = { "/members/center/point", "/members/center/point/{page}" } )
+	public String faqPointlist(Model model,@PathVariable("page") Optional<Integer> page) {
+		Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 6);
+		Long totalCount = faqRepository.getFaqPointTotal();
+		Page<Faq> faqs = faqService.getFaqPoint(pageable);
+		
+		model.addAttribute("faqs",faqs);
+		model.addAttribute("totalCount",totalCount);
+		model.addAttribute("maxPage", 5);
+		
+		return "member/faqPoint";
+	}
 	
+	// faq 혜택
+	@GetMapping(value = { "/members/center/benefit", "/members/center/benefit/{page}" } )
+	public String faqBenefitlist(Model model,@PathVariable("page") Optional<Integer> page) {
+		Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 6);
+		Long totalCount = faqRepository.getFaqBenefitTotal();
+		Page<Faq> faqs = faqService.getFaqBenefit(pageable);
+		
+		model.addAttribute("faqs",faqs);
+		model.addAttribute("totalCount",totalCount);
+		model.addAttribute("maxPage", 5);
+		
+		return "member/faqBenefit";
+	}
 	
-	
+	// faq 친구
+	@GetMapping(value = { "/members/center/frend", "/members/center/frend/{page}" } )
+	public String faqFrendlist(Model model,@PathVariable("page") Optional<Integer> page) {
+		Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 6);
+		Long totalCount = faqRepository.getFaqFrendTotal();
+		Page<Faq> faqs = faqService.getFaqFrend(pageable);
+		
+		model.addAttribute("faqs",faqs);
+		model.addAttribute("totalCount",totalCount);
+		model.addAttribute("maxPage", 5);
+		
+		return "member/faqFrend";
+	}
 	
 }

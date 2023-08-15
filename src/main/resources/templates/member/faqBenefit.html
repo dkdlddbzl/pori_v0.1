@@ -2451,13 +2451,13 @@ li.ac_item {}
 			<div class="tab_ui type2 tabSwiper py-5" th:object="${faqSearchDto}">
 				<div class="tab_wrap swiper-container swiper-container-horizontal swiper-container-free-mode ">
 					<ul class="tab_inner swiper-wrapper" style="transform: translate3d(0px, 0px, 0px);" >
-						<li class="swiper-slide tab active swiper-slide-active"><a href="/members/center"><span>전체</span></a></li>
+						<li class="swiper-slide tab  swiper-slide-active"><a href="/members/center"><span>전체</span></a></li>
 						
 							<li class="swiper-slide tab swiper-slide-next"><a href="/members/center/member"><span id="cdNm1">회원</span></a></li>
 						
 							<li class="swiper-slide tab"><a href="/members/center/point"><span id="cdNm2">포인트</span></a></li>
 						
-							<li class="swiper-slide tab"><a href="/members/center/benefit"><span id="cdNm3">혜택</span></a></li>
+							<li class="swiper-slide tab active"><a href="/members/center/benefit"><span id="cdNm3">혜택</span></a></li>
 						
 							<li class="swiper-slide tab"><a href="/members/center/frend"><span id="cdNm4">친구</span></a></li>
 						
@@ -2534,19 +2534,19 @@ li.ac_item {}
 													>
 													<a 
 													class="page-link"
-													th:href="@{'/members/center/' + ${faqs.number-1}}">이전</a></li>
+													th:href="@{'/members/center/benefit/' + ${faqs.number-1}}">이전</a></li>
 													
 												<li class="pagination-page page-item"
 													th:each="page: ${#numbers.sequence(start, end)}"
 													th:classappend="${faqs.number eq page-1}?'active':''">
 													<a class="page-link"
 													 th:inline="text"
-													 th:href="@{'/members/center/' + ${page-1}}">[[${page}]]</a></li>
+													 th:href="@{'/members/center/benefit/' + ${page-1}}">[[${page}]]</a></li>
 													 
 												<li class="pagination-page page-item"
 													th:classappend="${faqs.last}?'disabled'">
 													<a class="page-link"
-													th:href="@{'/members/center/' + ${faqs.number+1}}">다음</a></li>
+													th:href="@{'/members/center/benefit/' + ${faqs.number+1}}">다음</a></li>
 								</ul>
 							</pagination>
 						 </nav>
