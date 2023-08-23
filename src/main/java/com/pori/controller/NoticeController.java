@@ -40,7 +40,7 @@ public class NoticeController {
 	public String noticeForm(Model model) {
 		model.addAttribute("noticeFormDto", new NoticeFormDto());
 		
-		return "/notice/createNotice";
+		return "notice/createNotice";
 	}
 	
 	//notice 등록(insert)
@@ -74,7 +74,7 @@ public class NoticeController {
 		model.addAttribute("totalCount",totalCount);
 		model.addAttribute("maxPage", 5);
 		
-		return "/notice/listNotice";
+		return "notice/listNotice";
 	}
 	
 	
@@ -92,7 +92,7 @@ public class NoticeController {
 			return "/notice/list";
 		}
 		
-		return "/notice/updateNotice";
+		return "notice/updateNotice";
 	}
 	
 	
@@ -145,7 +145,7 @@ public class NoticeController {
 			return "/notice/listNotice";
 		}
 		
-		return "/notice/readNotice";
+		return "notice/readNotice";
 	}
 	
 }
